@@ -1,0 +1,54 @@
+-- AGGREGATE FUNCTIONS
+
+SELECT 
+	DepartmentID, 
+	COUNT(*) 
+FROM Employees 
+GROUP BY DepartmentID
+ORDER BY COUNT(*) DESC
+
+
+SELECT
+	DepartmentID,
+	COUNT(*) AS Cnt
+FROM Employees
+GROUP BY DepartmentID  -- HAVING AFTER GROUP BY
+HAVING COUNT(*) > 8
+ORDER BY COUNT(*) DESC
+
+
+SELECT 
+	DepartmentID,
+	AVG(Salary) AS AVRG
+FROM Employees
+GROUP BY DepartmentID
+HAVING AVG(Salary) > 24000
+ 
+
+
+--ANALYTIC FUNCTIONS
+
+SELECT PERCENTILE_CONT(0.5) 
+WITHIN GROUP (ORDER BY Salary DESC) 
+OVER (PARTITION BY DepartmentID)
+FROM Employees
+
+--RANKING FUNCTIONS
+
+SELECT ROW_NUMBER() OVER(ORDER BY Salary DESC) AS RowNumber
+,* 
+FROM Employees
+WHERE DepartmentID = 5
+
+
+SELECT ROW_NUMBER() OVER(ORDER BY Salary DESC) AS RowNumber
+,FirstName
+,LastName
+,DENSE_RANK() OVER(ORDER BY Salary DESC) AS [DenseRank]
+,RANK() OVER(ORDER BY Salary DESC) AS [Rank]
+,NTILE(5) OVER(ORDER BY Salary DESC) AS FiveTile 
+FROM Employees
+WHERE DepartmentID = 5
+
+
+
