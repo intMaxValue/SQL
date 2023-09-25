@@ -51,4 +51,72 @@ FROM Employees
 WHERE DepartmentID = 5
 
 
+SELECT
+	DepartmentID
+	,Salary
+	,COUNT(*)
+FROM Employees
+GROUP BY DepartmentID, Salary
+ORDER BY DepartmentID
+
+
+
+
+SELECT * FROM OPENJSON('{"FirstName": "Kolyo", "LastName": "Kolev", "Age": 33, "Hobby": { "Name": "Running" }}');
+
+DECLARE @SEPARATOR CHAR = ' ';
+
+SELECT CONCAT(FirstName, @SEPARATOR, LastName)
+FROM Employees
+
+SELECT CONCAT_WS(' ', FirstName, LastName) AS [Full Name]
+FROM Employees
+
+SELECT SUBSTRING(FirstName, 1, 1)
+FROM Employees
+
+SELECT TRIM(' ' + FirstName + ' ') FROM Employees
+
+SELECT RIGHT(FirstName, 3) FROM Employees
+
+SELECT UPPER(REVERSE('pESHO'))
+
+SELECT REPLICATE('*', LEN(FirstName))
+FROM Employees
+
+CREATE VIEW v_Employees AS
+SELECT [EmployeeID]
+      ,[FirstName]
+      ,[LastName]
+      ,[MiddleName]
+      ,[JobTitle]
+      ,[DepartmentID]
+      ,[ManagerID]
+      ,[HireDate]
+      ,[Salary]
+      ,[AddressID]
+  FROM [SoftUni].[dbo].[Employees]
+
+  SELECT * FROM v_Employees
+
+
+  SELECT STUFF('Pesho', 4, 0, 'Gosho')
+
+
+  --MATH FUNCTIONS
+
+  SELECT PI()
+  
+  SELECT ABS(-55)
+
+  SELECT SQRT(36)
+
+  SELECT FORMAT(PI(), 'F2', 'BG-bg')
+  SELECT FORMAT(PI(), 'C2', 'BG-bg') --CURRENCY
+  
+  SELECT ROUND(23.455335, 3)
+
+  SELECT FLOOR(23.455335)
+  SELECT CEILING(23.455335)
+
 
