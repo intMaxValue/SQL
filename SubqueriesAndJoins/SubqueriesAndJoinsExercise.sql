@@ -124,3 +124,13 @@ LEFT JOIN MountainsCountries AS mc ON c.CountryCode = mc.CountryCode
 LEFT JOIN Mountains AS m ON mc.MountainId = m.Id
 LEFT JOIN Peaks AS p ON M.Id = p.MountainId
 WHERE c.CountryName = 'Bulgaria' AND p.Elevation > 2835
+ORDER BY p.Elevation DESC
+
+
+SELECT c.CountryCode
+	   ,COUNT(m.MountainRange) as MountainRanges
+FROM Countries AS c
+LEFT JOIN MountainsCountries AS mc ON c.CountryCode = mc.CountryCode
+LEFT JOIN Mountains AS m ON mc.MountainId = m.Id
+WHERE c.CountryName IN ('Bulgaria', 'Russia', 'United States')
+GROUP BY c.CountryCode
