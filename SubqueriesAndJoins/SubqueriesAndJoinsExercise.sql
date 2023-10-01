@@ -134,3 +134,15 @@ LEFT JOIN MountainsCountries AS mc ON c.CountryCode = mc.CountryCode
 LEFT JOIN Mountains AS m ON mc.MountainId = m.Id
 WHERE c.CountryName IN ('Bulgaria', 'Russia', 'United States')
 GROUP BY c.CountryCode
+
+
+
+
+SELECT TOP 5 c.CountryName
+	   ,r.RiverName
+FROM Countries AS c
+LEFT JOIN Continents AS cont ON c.ContinentCode = cont.ContinentCode
+LEFT JOIN CountriesRivers AS cr ON c.CountryCode = cr.CountryCode
+LEFT JOIN Rivers AS r ON cr.RiverId = r.Id
+WHERE cont.ContinentCode = 'AF'
+ORDER BY c.CountryName
