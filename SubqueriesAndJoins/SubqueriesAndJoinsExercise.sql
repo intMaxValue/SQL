@@ -95,4 +95,12 @@ WHERE e.ManagerID IN (3, 7)
 ORDER BY e.EmployeeID
 
 
+SELECT TOP(50) e.EmployeeID
+	   ,CONCAT_WS(' ', e.FirstName, e.LastName) AS EmployeeName
+	   ,CONCAT_WS(' ',m.FirstName, m.LastName)
+	   ,d.[Name]
+FROM Employees AS e
+LEFT JOIN Employees AS m ON e.ManagerID = m.EmployeeID
+JOIN Departments AS d ON e.DepartmentID = d.DepartmentID
+ORDER BY e.EmployeeID
 
