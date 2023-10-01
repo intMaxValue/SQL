@@ -104,3 +104,23 @@ LEFT JOIN Employees AS m ON e.ManagerID = m.EmployeeID
 JOIN Departments AS d ON e.DepartmentID = d.DepartmentID
 ORDER BY e.EmployeeID
 
+
+SELECT TOP 1 AVG(Salary) AS MinAverageSalary
+FROM Employees
+GROUP BY DepartmentID
+ORDER BY MinAverageSalary
+
+
+
+
+--GEOGRAPHY DATABASE
+
+SELECT c.CountryCode
+	   ,m.MountainRange
+	   ,p.PeakName
+	   ,p.Elevation
+FROM Countries AS c
+LEFT JOIN MountainsCountries AS mc ON c.CountryCode = mc.CountryCode
+LEFT JOIN Mountains AS m ON mc.MountainId = m.Id
+LEFT JOIN Peaks AS p ON M.Id = p.MountainId
+WHERE c.CountryName = 'Bulgaria' AND p.Elevation > 2835
