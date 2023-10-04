@@ -91,3 +91,22 @@ FROM WizzardDeposits
 WHERE DepositStartDate > '1985-01-01'
 GROUP BY DepositGroup, IsDepositExpired
 ORDER BY DepositGroup DESC, IsDepositExpired
+
+
+SELECT 
+    [Host Wizard],
+	[Host Wizard Deposit] AS [Host Wizard Deposit],
+    [Guest Wizard],
+	[Guest Wizard Deposit] AS [Guest Wizard Deposit],
+    SUM([Host Wizard Deposit] - [Guest Wizard Deposit]) AS [Difference]
+FROM (
+    SELECT 
+        FirstName AS [Host Wizard],
+        DepositAmount AS [Host Wizard Deposit],
+        LEAD(FirstName) OVER (ORDER BY Id) AS [Guest Wizard],
+        LEAD(DepositAmount) OVER (ORDER BY Id) AS [Guest Wizard Deposit]
+    FROM WizzardDeposits
+) AS W
+GROUP BY [Host Wizard], [Guest Wizard];
+
+
