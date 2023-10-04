@@ -107,10 +107,18 @@ WHERE [Guest Wizard] IS NOT NULL
 
 
 
+--SoftUni Database
+
+SELECT DepartmentID,
+	   SUM(Salary)
+FROM Employees
+GROUP BY DepartmentID
 
 
 
-
-
+SELECT DepartmentID,
+	   SUM(Salary)
+FROM Employees
+GROUP BY DepartmentID
 
 
