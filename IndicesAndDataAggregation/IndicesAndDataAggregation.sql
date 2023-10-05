@@ -145,3 +145,39 @@ GROUP BY [DepartmentID]
 SELECT COUNT(Salary)
 FROM Employees
 WHERE ManagerID IS NULL
+
+
+SELECT DISTINCT DepartmentID
+		,Salary AS ThirdHighestSalary
+FROM
+		(SELECT DepartmentID
+				,Salary
+			    ,DENSE_RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary desc) AS RankedSalaries
+		FROM Employees) AS f
+WHERE RankedSalaries = 3
+
+
+WITH DepartmentAverages AS (
+    SELECT
+        DepartmentID,
+        AVG(Salary) AS AvgSalary
+    FROM
+        Employees
+    GROUP BY
+        DepartmentID
+)
+
+SELECT TOP 10
+    E.FirstName,
+    E.LastName,
+    E.DepartmentID
+FROM
+    Employees E
+JOIN
+    DepartmentAverages DA
+    ON E.DepartmentID = DA.DepartmentID
+WHERE
+    E.Salary > DA.AvgSalary
+ORDER BY
+    E.DepartmentID;
+
