@@ -142,3 +142,6 @@ FROM Employees2
 GROUP BY [DepartmentID]
 
 
+SELECT COUNT(Salary)
+FROM Employees
+WHERE ManagerID IS NULL
