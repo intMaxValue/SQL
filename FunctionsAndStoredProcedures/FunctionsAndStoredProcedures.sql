@@ -175,5 +175,49 @@ GO
 
 
 CREATE FUNCTION ufn_CalculateFutureValue
+(
+    @InitialSum DECIMAL(18, 4),
+    @YearlyInterestRate FLOAT,
+    @NumberOfYears INT
+)
+RETURNS DECIMAL(18, 4)
+AS
+BEGIN
+    DECLARE @FutureValue DECIMAL(18, 4);
+
+    SET @FutureValue = @InitialSum * POWER(1 + @YearlyInterestRate, @NumberOfYears);
+
+    SET @FutureValue = ROUND(@FutureValue, 4);
+
+    RETURN @FutureValue;
+END
+
+DECLARE @FutureValue DECIMAL(18, 4);
+SET @FutureValue = dbo.ufn_CalculateFutureValue(1000, 0.1, 5);
+SELECT @FutureValue;
+
+GO
+
+
+CREATE PROCEDURE usp_CalculateFutureValueForAccount
+    @AccountId INT,
+    @InterestRate FLOAT
+AS
+BEGIN
+    SELECT 
+        a.Id,
+        ah.FirstName,
+        ah.LastName,
+        a.Balance,
+        dbo.ufn_CalculateFutureValue(a.Balance, @InterestRate, 5) AS FutureBalance
+    FROM
+        Accounts AS a
+    INNER JOIN
+        AccountHolders AS ah 
+    ON
+        a.Id = ah.Id
+    WHERE
+        a.Id = @AccountId;
+END
 
 
