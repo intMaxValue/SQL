@@ -155,4 +155,18 @@ CREATE FUNCTION udf_GetVolunteersCountFromADepartment
 				RETURN @result
 		    END
 
+GO
 
+CREATE PROCEDURE usp_AnimalsWithOwnersOrNot 
+                 @AnimalName VARCHAR(30)
+			  AS
+		   BEGIN
+				 SELECT a.Name,
+						CASE 
+						WHEN o.Name IS NULL THEN 'For Adoption'
+						ELSE o.Name
+						END AS 'OwnersName'
+				   FROM Animals AS a
+				   RIGHT JOIN Owners AS o ON a.OwnerId = o.Id
+				  WHERE a.Name = @AnimalName
+		     END
